@@ -5,7 +5,13 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{804A5991-FE9B-4794-A193-582E44757CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movies.API", "Services\Movies.API\Movies.API.csproj", "{464811E2-7120-4451-A878-1785A73D2F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.API", "Services\Movies.API\Movies.API.csproj", "{464811E2-7120-4451-A878-1785A73D2F57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{03B90D92-BF4E-43CF-BD4C-3BD3603269EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{3EF032F3-B1DE-4AC9-A86C-E5DBD092805E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer\IdentityServer.csproj", "{63C05EEA-620D-4214-BA1F-3E02B5F33353}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +23,17 @@ Global
 		{464811E2-7120-4451-A878-1785A73D2F57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{464811E2-7120-4451-A878-1785A73D2F57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{464811E2-7120-4451-A878-1785A73D2F57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C05EEA-620D-4214-BA1F-3E02B5F33353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C05EEA-620D-4214-BA1F-3E02B5F33353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C05EEA-620D-4214-BA1F-3E02B5F33353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C05EEA-620D-4214-BA1F-3E02B5F33353}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{464811E2-7120-4451-A878-1785A73D2F57} = {804A5991-FE9B-4794-A193-582E44757CB7}
+		{63C05EEA-620D-4214-BA1F-3E02B5F33353} = {3EF032F3-B1DE-4AC9-A86C-E5DBD092805E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7C002D2-5391-4FE9-8085-7D520D59F045}
