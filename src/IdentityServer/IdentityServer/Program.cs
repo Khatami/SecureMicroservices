@@ -1,18 +1,15 @@
-using IdentityServer4.Models;
-using IdentityServer4.Test;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+using IdentityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // IdentityServer
 builder.Services
 	.AddIdentityServer()
-	.AddInMemoryClients(new List<Client>())
-	.AddInMemoryIdentityResources(new List<IdentityResource>())
-	.AddInMemoryApiResources(new List<ApiResource>())
-	.AddInMemoryApiScopes(new List<ApiScope>())
-	.AddTestUsers(new List<TestUser>())
+	.AddInMemoryClients(Config.Clients)
+	//.AddInMemoryIdentityResources(Config.IdentityResources)
+	//.AddInMemoryApiResources(Config.ApiResources)
+	.AddInMemoryApiScopes(Config.ApiScopes)
+	//.AddTestUsers(Config.TestUsers)
 	.AddDeveloperSigningCredential();
 
 var app = builder.Build();
