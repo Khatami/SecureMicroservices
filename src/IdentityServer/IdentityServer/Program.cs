@@ -18,7 +18,6 @@ app.UseHttpsRedirection();
 
 // IdentityServer
 app.UseRouting();
-
 app.UseIdentityServer();
 
 app.MapGet("/", async handler =>
