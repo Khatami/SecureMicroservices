@@ -1,0 +1,14 @@
+﻿{
+	"profiles": {
+		"Movies.Client": {
+			"commandName": "Project",
+			"dotnetRunMessages": true,
+			"launchBrowser": true,
+			"launchUrl": "Movies",
+			"applicationUrl": "https://localhost:7058;",
+			"environmentVariables": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			}
+		}
+	}
+}
