@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Movies.Client.Data;
+﻿using OpenAPIConsumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<MoviesClientContext>(options =>
-	options.UseSqlServer(builder.Configuration.GetConnectionString("MoviesClientContext")));
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient<MoviesAPIClient>((provider, client) => 
+{
+	client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API"));
+});
 
 var app = builder.Build();
 
@@ -18,11 +19,6 @@ if (!app.Environment.IsDevelopment())
 	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 	app.UseHsts();
 }
-
-// EF
-using var scope = app.Services.CreateScope();
-using var context = scope.ServiceProvider.GetService<MoviesClientContext>();
-context.Database.EnsureCreated();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

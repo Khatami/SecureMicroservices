@@ -20,14 +20,14 @@ namespace Movies.API.Controllers
 		}
 
 		// GET: api/Movies
-		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Movie>>> GetMovie()
+		[HttpGet(Name = nameof(GetMovies))]
+		public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
 		{
 			return await _context.Movies.ToListAsync();
 		}
 
 		// GET: api/Movies/5
-		[HttpGet("{id}")]
+		[HttpGet("{id}", Name = nameof(GetMovie))]
 		public async Task<ActionResult<Movie>> GetMovie(int id)
 		{
 			var movie = await _context.Movies.FindAsync(id);
@@ -43,7 +43,7 @@ namespace Movies.API.Controllers
 		// PUT: api/Movies/5
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-		[HttpPut("{id}")]
+		[HttpPut("{id}", Name = nameof(PutMovie))]
 		public async Task<IActionResult> PutMovie(int id, Movie movie)
 		{
 			if (id != movie.Id)
@@ -75,7 +75,7 @@ namespace Movies.API.Controllers
 		// POST: api/Movies
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-		[HttpPost]
+		[HttpPost(Name = nameof(PostMovie))]
 		public async Task<ActionResult<Movie>> PostMovie(Movie movie)
 		{
 			_context.Movies.Add(movie);
@@ -85,7 +85,7 @@ namespace Movies.API.Controllers
 		}
 
 		// DELETE: api/Movies/5
-		[HttpDelete("{id}")]
+		[HttpDelete("{id}", Name = nameof(DeleteMovie))]
 		public async Task<ActionResult<Movie>> DeleteMovie(int id)
 		{
 			var movie = await _context.Movies.FindAsync(id);

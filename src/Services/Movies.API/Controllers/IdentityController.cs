@@ -8,8 +8,8 @@ namespace Movies.API.Controllers
 	[Authorize]
 	public class IdentityController : ControllerBase
 	{
-		[HttpGet]
-		public IActionResult Get()
+		[HttpGet(Name = nameof(GetIdentity))]
+		public IActionResult GetIdentity()
 		{
 			var claims = User.Claims.Select(claim => new { claim.Type, claim.Value });
 

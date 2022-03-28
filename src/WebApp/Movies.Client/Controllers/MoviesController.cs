@@ -1,23 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Movies.Client.Data;
-using Movies.Client.Models;
+using OpenAPIConsumer;
 
 namespace Movies.Client.Controllers
 {
 	public class MoviesController : Controller
 	{
-		private readonly MoviesClientContext _context;
+		private readonly MoviesAPIClient _client;
 
-		public MoviesController(MoviesClientContext context)
+		public MoviesController(MoviesAPIClient client)
 		{
-			_context = context;
+			_client = client;
 		}
 
 		// GET: Movies
 		public async Task<IActionResult> Index()
 		{
-			return View(await _context.Movie.ToListAsync());
+			return View(await _client.GetMoviesAsync());
 		}
 
 		// GET: Movies/Details/5
@@ -28,8 +27,8 @@ namespace Movies.Client.Controllers
 				return NotFound();
 			}
 
-			var movie = await _context.Movie
-				.FirstOrDefaultAsync(m => m.Id == id);
+			var movie = await _client.GetMovieAsync(id.Value);
+
 			if (movie == null)
 			{
 				return NotFound();
@@ -53,10 +52,11 @@ namespace Movies.Client.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				_context.Add(movie);
-				await _context.SaveChangesAsync();
+				await _client.PostMovieAsync(movie);
+
 				return RedirectToAction(nameof(Index));
 			}
+
 			return View(movie);
 		}
 
@@ -68,11 +68,13 @@ namespace Movies.Client.Controllers
 				return NotFound();
 			}
 
-			var movie = await _context.Movie.FindAsync(id);
+			var movie = await _client.GetMovieAsync(id.Value);
+
 			if (movie == null)
 			{
 				return NotFound();
 			}
+
 			return View(movie);
 		}
 
@@ -92,20 +94,12 @@ namespace Movies.Client.Controllers
 			{
 				try
 				{
-					_context.Update(movie);
-					await _context.SaveChangesAsync();
+					await _client.PutMovieAsync(id, movie);
 				}
 				catch (DbUpdateConcurrencyException)
 				{
-					if (!MovieExists(movie.Id))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
 				}
+
 				return RedirectToAction(nameof(Index));
 			}
 			return View(movie);
@@ -119,8 +113,8 @@ namespace Movies.Client.Controllers
 				return NotFound();
 			}
 
-			var movie = await _context.Movie
-				.FirstOrDefaultAsync(m => m.Id == id);
+			var movie = await _client.DeleteMovieAsync(id.Value);
+
 			if (movie == null)
 			{
 				return NotFound();
@@ -134,15 +128,9 @@ namespace Movies.Client.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(int id)
 		{
-			var movie = await _context.Movie.FindAsync(id);
-			_context.Movie.Remove(movie);
-			await _context.SaveChangesAsync();
-			return RedirectToAction(nameof(Index));
-		}
+			await _client.DeleteMovieAsync(id);
 
-		private bool MovieExists(int id)
-		{
-			return _context.Movie.Any(e => e.Id == id);
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }
