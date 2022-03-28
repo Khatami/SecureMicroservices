@@ -5,9 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<MoviesAPIClient>((provider, client) => 
+builder.Services.AddTransient<MoviesAPIClient>(x =>
 {
-	client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API"));
+	string baseAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
+	return new MoviesAPIClient(baseAddress, new HttpClient());
 });
 
 var app = builder.Build();
