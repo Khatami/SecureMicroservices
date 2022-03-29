@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using OpenAPIConsumer;
 
 namespace Movies.Client.Controllers
@@ -92,13 +91,7 @@ namespace Movies.Client.Controllers
 
 			if (ModelState.IsValid)
 			{
-				try
-				{
-					await _client.PutMovieAsync(id, movie);
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-				}
+				await _client.PutMovieAsync(id, movie);
 
 				return RedirectToAction(nameof(Index));
 			}
