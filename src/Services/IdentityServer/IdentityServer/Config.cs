@@ -25,22 +25,22 @@ namespace IdentityServer
 			// Interactive Clients
 			new Client()
 			{
-				ClientId = "movies_mvc_clinet",
+				ClientId = "movies_mvc_client",
 				ClientName = "Movies MVC Web App",
 				AllowedGrantTypes = GrantTypes.Code,
 				AllowRememberConsent = false, //TODO: ?
 				RedirectUris = new List<string>()
 				{
-					"https://localhost:6600/signin-oidc"
+					"https://localhost:6700/signin-oidc" // Client URI
 				},
 				PostLogoutRedirectUris = new List<string>()
 				{
-					"https://localhost:6600/signout-callback-oidc"
+					"https://localhost:6700/signout-callback-oidc" // Client URI
 				},
 				ClientSecrets =
 				{
 					new Secret("secret".Sha256())
-				}, //TODO: ?
+				},
 				AllowedScopes = new List<string>()
 				{
 					IdentityServerConstants.StandardScopes.OpenId,
@@ -60,8 +60,8 @@ namespace IdentityServer
 
 		public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
 		{
-			//new IdentityResources.OpenId(), //TODO: ?
-			//new IdentityResources.Profile() //TODO: ?
+			new IdentityResources.OpenId(), //TODO: ?
+			new IdentityResources.Profile() //TODO: ?
 		};
 
 		public static List<TestUser> TestUsers => new List<TestUser>

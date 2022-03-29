@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OpenAPIConsumer;
 
 namespace Movies.Client.Controllers
 {
+	[Authorize]
 	public class MoviesController : Controller
 	{
 		private readonly MoviesAPIClient _client;
@@ -15,7 +17,10 @@ namespace Movies.Client.Controllers
 		// GET: Movies
 		public async Task<IActionResult> Index()
 		{
-			return View(await _client.GetMoviesAsync());
+			//var movies = await _client.GetMoviesAsync();
+
+			var movies = new Movie[] { };
+			return View(movies);
 		}
 
 		// GET: Movies/Details/5
