@@ -43,6 +43,12 @@ namespace IdentityServer
 				},
 				AllowedScopes = new List<string>()
 				{
+					/*
+					   ************************************************************
+					   IdentityResources
+					   ************************************************************
+					*/
+
 					// REQUIRED. Informs the Authorization Server that the Client is making an OpenID
 					// Connect request. If the openid scope value is not present, the behavior is entirely unspecified.
 					IdentityServerConstants.StandardScopes.OpenId,
@@ -50,7 +56,15 @@ namespace IdentityServer
 					// OPTIONAL. This scope value requests access to the End-User's default profile
 					// Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username,
 					// profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.
-					IdentityServerConstants.StandardScopes.Profile
+					IdentityServerConstants.StandardScopes.Profile,
+
+					"AllowedServices"
+
+					/*
+					   ************************************************************
+					   /IdentityResources
+					   ************************************************************
+					*/
 				}
 			}
 		};
@@ -64,10 +78,69 @@ namespace IdentityServer
 			new ApiScope("movieAPI", "Movie API")
 		};
 
+		// An identity resource is a named group of claims that can be requested using the scope parameter.
+		// Once the resource is defined, you can give access to it to a client via the AllowedScopes option
 		public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[]
 		{
-			new IdentityResources.OpenId(), //TODO: ?
-			new IdentityResources.Profile(), //TODO: ?
+			/*
+			   ************************************************************
+			   openid
+			   ************************************************************
+			*/
+
+			//new IdentityResource(
+			//	name: "openid",
+			//	userClaims: new[] { "sub" },
+			//	displayName: "Your user identifier");
+
+			// sub => SubjectID
+			new IdentityResources.OpenId(),
+
+			/*
+			   ************************************************************
+			   /openid
+			   ************************************************************
+			*/
+
+			/*
+			   ************************************************************
+			   profile
+			   ************************************************************
+			*/
+			new IdentityResource(
+				name: "profile",
+				userClaims: new[] 
+				{
+					JwtClaimTypes.GivenName,
+					JwtClaimTypes.FamilyName,
+					JwtClaimTypes.WebSite,
+					JwtClaimTypes.Email,
+				},
+				displayName: "Your profile data"),
+
+			//new IdentityResources.Profile(),
+			
+			/*
+			   ************************************************************
+			   /profile
+			   ************************************************************
+			*/
+
+			/*
+			   ************************************************************
+			   custom identity resources
+			   ************************************************************
+			*/
+			new IdentityResource(
+				name: "AllowedServices",
+				userClaims: new[] { "services" },
+				displayName: "Services, which are allowed to access")
+
+			/*
+			   ************************************************************
+			   /custom identity resources
+			   ************************************************************
+			*/
 		};
 
 		public static List<TestUser> TestUsers => new List<TestUser>
@@ -82,7 +155,8 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.GivenName, "Seyedhamed"),
 					new Claim(JwtClaimTypes.FamilyName, "Khatami"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.hamed.com"),
-					new Claim(JwtClaimTypes.Email, "shamedkhatami@gmail.com")
+					new Claim(JwtClaimTypes.Email, "shamedkhatami@gmail.com"),
+					new Claim("services", "A,B,C")
 				}
 			},
 
@@ -96,7 +170,8 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.GivenName, "Fatemeh"),
 					new Claim(JwtClaimTypes.FamilyName, "Seraj"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.fatemeh.com"),
-					new Claim(JwtClaimTypes.Email, "fatemeh_seraj@outlook.com")
+					new Claim(JwtClaimTypes.Email, "fatemeh_seraj@outlook.com"),
+					new Claim("services", "A,B")
 				}
 			}
 		};

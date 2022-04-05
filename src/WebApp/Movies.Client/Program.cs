@@ -29,7 +29,12 @@ builder.Services.AddAuthentication(options =>
 	options.ClientSecret = "secret";
 	options.ResponseType = "code";
 
+	var predifniedScopes = options.Scope; //OpenID, Profile
+	options.Scope.Add("AllowedServices");
+
+	var predifinedClaimActions = options.ClaimActions;
 	options.ClaimActions.MapUniqueJsonKey("website", "website");
+	options.ClaimActions.MapUniqueJsonKey("services", "services");
 
 	options.SaveTokens = true; //TODO: ?
 
