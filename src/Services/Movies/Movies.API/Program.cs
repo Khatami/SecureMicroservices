@@ -1,8 +1,7 @@
-using Microsoft.EntityFrameworkCore;
-using Movies.API.Persistence;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Movies.API.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +23,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //TOD
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "movieClient"));
+	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
 });
 
 // EF

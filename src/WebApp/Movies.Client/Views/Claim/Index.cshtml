@@ -1,0 +1,46 @@
+﻿<div>
+	<a asp-controller="Movies" asp-action="Index">Index</a>
+</div>
+
+<br/>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				#
+			</th>
+
+			<th>
+				Issuer
+			</th>
+
+			<td>
+				Type
+			</td>
+
+			<td>
+				Value
+			</td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var claim in User.Claims.Select((value , index) => (value , index)))
+		{
+			<tr>
+				<td>
+					@(claim.index + 1)
+				</td>
+				<td>
+					@claim.value.Issuer
+				</td>
+				<td>
+					@claim.value.Type
+				</td>
+				<td>
+					@claim.value.Value
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

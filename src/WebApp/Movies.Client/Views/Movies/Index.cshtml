@@ -4,7 +4,9 @@
 	ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div>
+	<a asp-controller="Claim" asp-action="Index">User: @User.Identity.Name</a>
+</div>
 
 <p>
 	<a asp-action="Create">Create New</a>

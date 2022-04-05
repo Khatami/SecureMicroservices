@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using OpenAPIConsumer;
 
@@ -28,12 +29,17 @@ builder.Services.AddAuthentication(options =>
 	options.ClientSecret = "secret";
 	options.ResponseType = "code";
 
-	options.Scope.Add("openid");
-	options.Scope.Add("profile");
+	options.ClaimActions.MapUniqueJsonKey("website", "website");
 
 	options.SaveTokens = true; //TODO: ?
 
 	options.GetClaimsFromUserInfoEndpoint = true; //TODO: ?
+
+	/*
+		Microsoft and IdentityServer have different opinion on what the name of the claims should be,
+		so you need to point out, which claim is the name claim, by using:
+	*/
+	options.TokenValidationParameters.NameClaimType = "given_name";
 });
 
 var app = builder.Build();
