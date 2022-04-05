@@ -33,7 +33,10 @@ builder.Services.AddAuthentication(options =>
 
 	options.SaveTokens = true; //TODO: ?
 
-	options.GetClaimsFromUserInfoEndpoint = true; //TODO: ?
+	// Boolean to set whether the handler should go to user info endpoint to retrieve
+	// additional claims or not after creating an identity from id_token received from
+	// token endpoint. The default is 'false'.
+	options.GetClaimsFromUserInfoEndpoint = true;
 
 	/*
 		Microsoft and IdentityServer have different opinion on what the name of the claims should be,
