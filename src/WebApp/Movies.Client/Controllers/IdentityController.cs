@@ -11,6 +11,17 @@ namespace Movies.Client.Controllers
 	[Authorize]
 	public class IdentityController : Controller
 	{
+		[AllowAnonymous]
+		public IActionResult Login()
+		{
+			var challenge = Challenge(new AuthenticationProperties
+			{
+				RedirectUri = "/"
+			});
+
+			return challenge;
+		}
+
 		public async Task Logout()
 		{
 			// Signout from the browser
