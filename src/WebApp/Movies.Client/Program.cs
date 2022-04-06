@@ -23,7 +23,7 @@ builder.Services.AddAuthentication(options =>
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)  //TODO: ?
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>  //TODO: ?
 {
-	options.Authority = "https://localhost:6600";
+	options.Authority = "https://localhost:8888";
 
 	options.ClientId = "movies_mvc_client";
 	options.ClientSecret = "secret";

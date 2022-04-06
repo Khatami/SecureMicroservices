@@ -19,7 +19,22 @@ namespace IdentityServer
 				{
 					new Secret("secret".Sha256())
 				},
-				AllowedScopes = { "movieAPI" }
+				AllowedScopes = 
+				{
+					/*
+					   ************************************************************
+					   ApiScopes
+					   ************************************************************
+					*/
+
+					"movieAPI"
+
+					/*
+					   ************************************************************
+					   /ApiScopes
+					   ************************************************************
+					*/
+				}
 			},
 
 			// Interactive Clients
@@ -109,7 +124,7 @@ namespace IdentityServer
 			*/
 			new IdentityResource(
 				name: "profile",
-				userClaims: new[] 
+				userClaims: new[]
 				{
 					JwtClaimTypes.GivenName,
 					JwtClaimTypes.FamilyName,

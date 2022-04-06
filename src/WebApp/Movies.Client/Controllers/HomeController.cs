@@ -2,15 +2,10 @@
 
 namespace Movies.Client.Controllers
 {
-	public class ClaimController : Controller
+	public class HomeController : Controller
 	{
 		public IActionResult Index()
 		{
-			if (User.Identity.IsAuthenticated == false)
-			{
-				return Forbid();
-			}
-
 			return View();
 		}
 	}

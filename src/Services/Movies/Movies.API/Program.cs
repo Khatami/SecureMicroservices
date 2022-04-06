@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //TODO: ?
 	.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
 	{
-		options.Authority = "https://localhost:6600";
+		options.Authority = "https://localhost:8888";
 		options.TokenValidationParameters = new TokenValidationParameters()
 		{
 			ValidateAudience = false //TODO: ?
