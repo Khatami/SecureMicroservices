@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -9,6 +11,15 @@ namespace Movies.Client.Controllers
 	[Authorize]
 	public class IdentityController : Controller
 	{
+		public async Task Logout()
+		{
+			// Signout from the browser
+			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+			// Signout from the OIDC
+			await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+		}
+
 		public async Task<ActionResult> Claims()
 		{
 			if (User.Identity.IsAuthenticated == false)

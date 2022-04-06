@@ -1,9 +1,13 @@
 using IdentityServer;
+using IdentityServerHost.Quickstart.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // MVC
 builder.Services.AddControllersWithViews();
+
+//Quickstart Options
+AccountOptions.AutomaticRedirectAfterSignOut = true;
 
 // IdentityServer
 builder.Services
