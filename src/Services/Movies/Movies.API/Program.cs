@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // JWT Bearer Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //TODO: ?
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
 	{
 		options.Authority = "https://localhost:8888";
@@ -19,7 +19,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) //TOD
 		};
 	});
 
-// Claim-based authorization
+// Claims-based authorization
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "movieClient"));

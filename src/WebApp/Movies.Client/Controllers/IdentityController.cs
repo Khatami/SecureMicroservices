@@ -14,12 +14,19 @@ namespace Movies.Client.Controllers
 		[AllowAnonymous]
 		public IActionResult Login()
 		{
-			var challenge = Challenge(new AuthenticationProperties
+			// A ChallengeResult is an ActionResult that when executed, challenges the given authentication schemes' handler
+			// A challenge is basically a way of saying "I don't know who this user is, please verify their identity".
+			// So if the authentication handler triggered is e.g. the Facebook authentication handler,
+			// it will react to the challenge by issuing a redirect to the Facebook authentication page.
+			// A local account authentication handler might issue a redirect to the local sign-in page.
+
+			// In the case of JWT Bearer authentication, the handler cannot do anything other than respond with a 401 status code and leave it up to the caller to authenticate themselves properly.
+			// var challenge = Challenge(new AuthenticationProperties
+
+			return Challenge(new AuthenticationProperties
 			{
 				RedirectUri = "/"
 			});
-
-			return challenge;
 		}
 
 		public async Task Logout()
