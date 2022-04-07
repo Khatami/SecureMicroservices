@@ -1,20 +1,29 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.DependencyInjection;
+using Movies.Client.Services;
 using OpenAPIConsumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<IClientCredentialService, ClientCredentialService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<MoviesAPIClient>(x =>
 {
-	string baseAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
-	return new MoviesAPIClient(baseAddress, new HttpClient());
-});
+	var clientCredentialService = x.GetService<IClientCredentialService>();
+	var accessToken = clientCredentialService.GetTokenAsync();
+	accessToken.Wait();
 
-// Authentication
+	var httpClient = new HttpClient();
+	httpClient.SetBearerToken(accessToken.Result);
+
+	var movieAPIClientAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
+	return new MoviesAPIClient(movieAPIClientAddress, httpClient);
+});
 
 /*
 	First of all, the OIDC authentication scheme and the JWT bearer authentication scheme are independent of each other.
@@ -30,13 +39,14 @@ builder.Services.AddTransient<MoviesAPIClient>(x =>
 	Of course, the answer could be “both” in which case you want all of those three schemes but ASP.NET Core will not support this without further configuration.
 */
 
+// Authentication
 builder.Services.AddAuthentication(options =>
 {
 	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 	options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;  //TODO: ?
 })
-.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)  //TODO: ?
-.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>  //TODO: ?
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
 	options.Authority = "https://localhost:8888";
 

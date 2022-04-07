@@ -17,9 +17,8 @@ namespace Movies.Client.Controllers
 		// GET: Movies
 		public async Task<IActionResult> Index()
 		{
-			//var movies = await _client.GetMoviesAsync();
+			var movies = await _client.GetMoviesAsync();
 
-			var movies = new Movie[] { };
 			return View(movies);
 		}
 
