@@ -1,5 +1,5 @@
 ﻿using IdentityModel.Client;
-using Movies.Client.Options;
+using Movies.Client.Configuration;
 
 namespace Movies.Client.Services
 {

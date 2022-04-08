@@ -1,4 +1,4 @@
-﻿namespace Movies.Client.Options
+﻿namespace Movies.Client.Configuration
 {
 	public class ClientCredential
 	{
