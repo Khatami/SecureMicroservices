@@ -11,7 +11,7 @@ using OpenAPIConsumer;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<IClientCredentialService, ClientCredentialService>();
+builder.Services.AddSingleton<IClientCredentialService, ClientCredentialService>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddTransient<AuthenticationDelegatingHandler>();
@@ -87,6 +87,8 @@ builder.Services.AddAuthentication(options =>
 
 	options.ClientId = "movies_mvc_client";
 	options.ClientSecret = "secret";
+
+	// OIDC Authentication Flows
 	options.ResponseType = "code";
 
 	var predifniedScopes = options.Scope; //OpenID, Profile

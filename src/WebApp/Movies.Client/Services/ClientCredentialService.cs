@@ -1,11 +1,13 @@
 ﻿using IdentityModel.Client;
 using Movies.Client.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Movies.Client.Services
 {
 	public class ClientCredentialService : IClientCredentialService
 	{
 		private readonly IConfiguration _configuration;
+		private string _accessToken { get; set; }
 
 		public ClientCredentialService(IConfiguration configuration)
 		{
@@ -14,6 +16,17 @@ namespace Movies.Client.Services
 
 		public async Task<string> GetTokenAsync()
 		{
+			if (string.IsNullOrEmpty(_accessToken) == false)
+			{
+				var tokenHandler = new JwtSecurityTokenHandler();
+				var jwtSecurityToken = tokenHandler.ReadJwtToken(_accessToken);
+
+				if (jwtSecurityToken.ValidTo > DateTime.UtcNow.AddSeconds(60))
+				{
+					return _accessToken;
+				}
+			}
+
 			var clientCredential = _configuration.GetSection("ClientCredential").Get<ClientCredential>();
 
 			var httpClient = new HttpClient();
@@ -38,7 +51,8 @@ namespace Movies.Client.Services
 				throw new Exception(tokenResponse.Error);
 			}
 
-			return tokenResponse.AccessToken;
+			_accessToken = tokenResponse.AccessToken;
+			return _accessToken;
 		}
 	}
 }
