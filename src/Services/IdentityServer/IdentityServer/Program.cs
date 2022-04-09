@@ -1,4 +1,5 @@
 using IdentityServer;
+using IdentityServer4.Services;
 using IdentityServerHost.Quickstart.UI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,20 @@ builder.Services.AddControllersWithViews();
 
 //Quickstart Options
 AccountOptions.AutomaticRedirectAfterSignOut = true;
+
+// CORS
+// We should enable CORS for Swagger UI authorization
+if (builder.Environment.IsDevelopment())
+{
+	builder.Services.AddSingleton<ICorsPolicyService>((container) =>
+	{
+		var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+		return new DefaultCorsPolicyService(logger)
+		{
+			AllowedOrigins = { "https://localhost:6500" }
+		};
+	});
+}
 
 // IdentityServer
 builder.Services
