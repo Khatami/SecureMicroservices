@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.Diagnostics;
+using System.Text;
 
 namespace Movies.Client.Controllers
 {
@@ -64,6 +67,20 @@ namespace Movies.Client.Controllers
 			{
 				Debug.WriteLine($"Claim type: {claim.Type} - Claim value: {claim.Value}");
 			}
+
+			// cookies decryption (for testing)
+
+			// ONE - grab the CookieAuthenticationOptions instance
+			var cookieAuthenticationOptions = HttpContext.RequestServices
+				.GetRequiredService<IOptionsMonitor<CookieAuthenticationOptions>>()
+				.Get(CookieAuthenticationDefaults.AuthenticationScheme); //or use .Get("Cookies")
+
+			// TWO - Get the encrypted cookie value
+			var cookie = cookieAuthenticationOptions.CookieManager
+				.GetRequestCookie(HttpContext, cookieAuthenticationOptions.Cookie.Name);
+
+			// THREE - decrypt it
+			var unprotectedCookie = cookieAuthenticationOptions.TicketDataFormat.Unprotect(cookie);
 		}
 	}
 }
