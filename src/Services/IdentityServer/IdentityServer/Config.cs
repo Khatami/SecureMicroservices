@@ -40,7 +40,7 @@ namespace IdentityServer
 			// Interactive Clients
 			new Client()
 			{
-				ClientId = "movies_mvc_client",
+				ClientId = "movies_mvc_client_interactive",
 				ClientName = "Movies MVC Web App",
 				AllowedGrantTypes = GrantTypes.Code,
 				AllowRememberConsent = false, //TODO: ?
@@ -96,11 +96,11 @@ namespace IdentityServer
 				AllowRememberConsent = false, //TODO: ?
 				RedirectUris = new List<string>()
 				{
-					"https://localhost:6700/signin-oidc" // Movies.Client URI
+					"https://localhost:6600/signin-oidc" // Movies.Client URI
 				},
 				PostLogoutRedirectUris = new List<string>()
 				{
-					"https://localhost:6700/signout-callback-oidc" // Movies.Client URI
+					"https://localhost:6600/signout-callback-oidc" // Movies.Client URI
 				},
 				ClientSecrets =
 				{

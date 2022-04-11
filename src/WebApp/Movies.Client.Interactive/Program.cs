@@ -85,7 +85,7 @@ builder.Services.AddAuthentication(options =>
 {
 	options.Authority = "https://localhost:8888";
 
-	options.ClientId = "movies_mvc_client";
+	options.ClientId = "movies_mvc_client_interactive";
 	options.ClientSecret = "secret";
 
 	// OIDC Authentication Flows
