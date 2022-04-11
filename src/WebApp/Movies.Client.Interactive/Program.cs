@@ -11,8 +11,9 @@ using OpenAPIConsumer;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddSingleton<IClientCredentialService, ClientCredentialService>();
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddSingleton<IClientCredentialService, ClientCredentialService>();
 
 builder.Services.AddTransient<AuthenticationDelegatingHandler>();
 builder.Services.AddHttpClient("MovieApiClient", client =>

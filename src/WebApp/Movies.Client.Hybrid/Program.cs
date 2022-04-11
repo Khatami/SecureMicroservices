@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Net.Http.Headers;
+using Movies.Client.Hybrid.HttpHandlers;
 using OpenAPIConsumer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,10 +10,24 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+/*
+	It's only necessary to use IHttpContextAccessor when you need access to the HttpContext inside a service.
+*/
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddTransient<AuthenticationDelegatingHandler>();
+builder.Services.AddHttpClient("MovieApiClient", client =>
+{
+	client.DefaultRequestHeaders.Clear();
+	client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+}).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
 builder.Services.AddTransient<MoviesAPIClient>(x =>
 {
+	var httpClient = x.GetService<IHttpClientFactory>().CreateClient("MovieApiClient");
+
 	var movieAPIClientAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
-	return new MoviesAPIClient(movieAPIClientAddress, new HttpClient());
+	return new MoviesAPIClient(movieAPIClientAddress, httpClient);
 });
 
 /*
