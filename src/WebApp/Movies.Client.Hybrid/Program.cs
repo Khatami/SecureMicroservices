@@ -89,9 +89,6 @@ builder.Services.AddAuthentication(options =>
 			return Task.CompletedTask;
 		},
 
-		// Step (4)
-		// Step (6)
-		// Step (8)
 		OnAuthenticationFailed = context =>
 		{
 			context.Response.Redirect("/Home/Error");
@@ -100,11 +97,13 @@ builder.Services.AddAuthentication(options =>
 			return Task.CompletedTask;
 		},
 
-		// Step (3)
-		OnAuthorizationCodeReceived = context =>
-		{
-			var authorizationCode = context.ProtocolMessage.Code;
+		/*
+			Steps are different based on chosen flow -> these steps are for hybrid flow.
+		*/
 
+		// Step (1)
+		OnRedirectToIdentityProvider = context =>
+		{
 			return Task.CompletedTask;
 		},
 
@@ -114,14 +113,51 @@ builder.Services.AddAuthentication(options =>
 			return Task.CompletedTask;
 		},
 
-		// Step (1)
-		OnRedirectToIdentityProvider = context =>
+		// Step (3)
+		OnTokenValidated = context =>
+		{
+			var idToken = context.SecurityToken;
+
+			string userIdentifier = idToken.Subject;
+
+			return Task.CompletedTask;
+		},
+
+		// Step (4)
+		OnAuthorizationCodeReceived = context =>
+		{
+			var authorizationCode = context.ProtocolMessage.Code;
+
+			return Task.CompletedTask;
+		},
+
+		// Step (5)
+		OnTokenResponseReceived = context =>
+		{
+			return Task.CompletedTask;
+		},
+
+		// Step (6)
+		OnUserInformationReceived = context =>
+		{
+			return Task.CompletedTask;
+		},
+
+		// Step (7)
+		OnTicketReceived = context =>
+		{
+			// If your authentication logic is based on users then add your logic here
+			return Task.CompletedTask;
+		},
+
+		// Logout: Step (1)
+		OnRedirectToIdentityProviderForSignOut = context =>
 		{
 			return Task.CompletedTask;
 		},
 
 		// Logout: Step (2)
-		OnRedirectToIdentityProviderForSignOut = context =>
+		OnSignedOutCallbackRedirect = context =>
 		{
 			return Task.CompletedTask;
 		},
@@ -132,41 +168,6 @@ builder.Services.AddAuthentication(options =>
 		},
 
 		OnRemoteSignOut = context =>
-		{
-			return Task.CompletedTask;
-		},
-
-		// Logout: Step (4)
-		OnSignedOutCallbackRedirect = context =>
-		{
-			return Task.CompletedTask;
-		},
-
-		// Step (10)
-		OnTicketReceived = context =>
-		{
-			// If your authentication logic is based on users then add your logic here
-			return Task.CompletedTask;
-		},
-
-		// Step (5)
-		OnTokenResponseReceived = context =>
-		{
-			return Task.CompletedTask;
-		},
-
-		// Step (7)
-		OnTokenValidated = context =>
-		{
-			var idToken = context.SecurityToken;
-
-			string userIdentifier = idToken.Subject;
-
-			return Task.CompletedTask;
-		},
-
-		// Step (9)
-		OnUserInformationReceived = context =>
 		{
 			return Task.CompletedTask;
 		},
