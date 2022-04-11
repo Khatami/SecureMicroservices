@@ -73,11 +73,25 @@ namespace IdentityServer
 					// profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.
 					IdentityServerConstants.StandardScopes.Profile,
 
-					"AllowedServices"
+					"AllowedServices",
 
 					/*
 					   ************************************************************
 					   /IdentityResources
+					   ************************************************************
+					*/
+
+					/*
+					   ************************************************************
+					   ApiScopes
+					   ************************************************************
+					*/
+
+					"movieAPI"
+
+					/*
+					   ************************************************************
+					   /ApiScopes
 					   ************************************************************
 					*/
 				}

@@ -1,19 +1,17 @@
 ﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace Movies.Client.Interactive.HttpHandlers
 {
 	public class AuthenticationDelegatingHandler : DelegatingHandler
 	{
-		private readonly IHttpClientFactory _httpClientFactory;
-		private ClientCredentialsTokenRequest _clientCredentialsTokenRequest;
+		private readonly IHttpContextAccessor _contextAccessor;
 		private string _accessToken { get; set; }
-
-		public AuthenticationDelegatingHandler(IHttpClientFactory httpClientFactory,
-			ClientCredentialsTokenRequest clientCredentialsTokenRequest)
+		public AuthenticationDelegatingHandler(IHttpContextAccessor contextAccessor)
 		{
-			_httpClientFactory = httpClientFactory;
-			_clientCredentialsTokenRequest = clientCredentialsTokenRequest;
+			_contextAccessor = contextAccessor;
 		}
 
 		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -31,15 +29,8 @@ namespace Movies.Client.Interactive.HttpHandlers
 				}
 			}
 
-			var httpClient = _httpClientFactory.CreateClient("IDPClient");
+			_accessToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
-			var tokenResponse = await httpClient.RequestClientCredentialsTokenAsync(_clientCredentialsTokenRequest);
-			if (tokenResponse.IsError)
-			{
-				throw new Exception(tokenResponse.Error);
-			}
-
-			_accessToken = tokenResponse.AccessToken;
 			request.SetBearerToken(_accessToken);
 
 			return await base.SendAsync(request, cancellationToken);

@@ -1,11 +1,8 @@
-﻿using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
-using Movies.Client.Interactive.Configuration;
 using Movies.Client.Interactive.HttpHandlers;
-using Movies.Client.Interactive.Services;
 using OpenAPIConsumer;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//builder.Services.AddSingleton<IClientCredentialService, ClientCredentialService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<AuthenticationDelegatingHandler>();
 builder.Services.AddHttpClient("MovieApiClient", client =>
@@ -22,40 +19,9 @@ builder.Services.AddHttpClient("MovieApiClient", client =>
 	client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
 }).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
 
-builder.Services.AddHttpClient("IDPClient", client =>
-{
-	client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API"));
-	client.DefaultRequestHeaders.Clear();
-	client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
-});
-
-builder.Services.AddSingleton<ClientCredentialsTokenRequest>(service => 
-{
-	var clientCredential = builder.Configuration.GetSection("ClientCredential").Get<ClientCredential>();
-
-	return new ClientCredentialsTokenRequest()
-	{
-		Address = $"{clientCredential.Address}/connect/token",
-		ClientId = clientCredential.ClientId,
-		ClientSecret = clientCredential.ClientSecret,
-		Scope = clientCredential.Scope
-	};
-});
-
 builder.Services.AddTransient<MoviesAPIClient>(x =>
 {
-	// first method
 	var httpClient = x.GetService<IHttpClientFactory>().CreateClient("MovieApiClient");
-
-	/*
-		// second method
-		var clientCredentialService = x.GetService<IClientCredentialService>();
-		var accessToken = clientCredentialService.GetTokenAsync();
-		accessToken.Wait();
-
-		var httpClient = new HttpClient();
-		httpClient.SetBearerToken(accessToken.Result);
-	*/
 
 	var movieAPIClientAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
 	return new MoviesAPIClient(movieAPIClientAddress, httpClient);
@@ -94,6 +60,7 @@ builder.Services.AddAuthentication(options =>
 
 	var predifniedScopes = options.Scope; //OpenID, Profile
 	options.Scope.Add("AllowedServices");
+	options.Scope.Add("movieAPI");
 
 	var predifinedClaimActions = options.ClaimActions;
 	options.ClaimActions.MapUniqueJsonKey("website", "website");
@@ -178,7 +145,7 @@ builder.Services.AddAuthentication(options =>
 		{
 			// If your authentication logic is based on users then add your logic here
 			return Task.CompletedTask;
-		}
+		},
 
 		// Logout: Step (1)
 		OnRedirectToIdentityProviderForSignOut = context =>

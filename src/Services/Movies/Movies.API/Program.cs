@@ -24,7 +24,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Claims-based authorization
 builder.Services.AddAuthorization(options =>
 {
-	options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("client_id", "movieClient" , "movies_mvc_client_hybrid"));
+	options.AddPolicy("ClientIdPolicy", policy => 
+		policy.RequireClaim("client_id", "movieClient" , "movies_mvc_client_interactive", "movies_mvc_client_hybrid"));
+
 	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
 });
 
