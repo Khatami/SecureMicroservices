@@ -1,4 +1,4 @@
-﻿namespace Movies.Client.Services
+﻿namespace Movies.Client.Interactive.Services
 {
 	public interface IClientCredentialService
 	{

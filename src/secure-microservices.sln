@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{1F9894E5-6FFF-4F4C-845D-6F077EE89ADF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Client", "WebApp\Movies.Client\Movies.Client.csproj", "{0D5A9F3B-6911-4F1A-8F42-5D8959703315}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Client.Interactive", "WebApp\Movies.Client\Movies.Client.Interactive.csproj", "{0D5A9F3B-6911-4F1A-8F42-5D8959703315}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movies", "Movies", "{6BB4442C-744D-4866-83E1-1957A516EC58}"
 EndProject

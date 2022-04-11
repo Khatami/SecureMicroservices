@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OpenAPIConsumer;
 
-namespace Movies.Client.Controllers
+namespace Movies.Client.Interactive.Controllers
 {
 	[Authorize]
 	public class MoviesController : Controller

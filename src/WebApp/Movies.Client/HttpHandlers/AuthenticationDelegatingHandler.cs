@@ -1,7 +1,7 @@
 ﻿using IdentityModel.Client;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Movies.Client.HttpHandlers
+namespace Movies.Client.Interactive.HttpHandlers
 {
 	public class AuthenticationDelegatingHandler : DelegatingHandler
 	{

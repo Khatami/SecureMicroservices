@@ -1,8 +1,8 @@
 ﻿using IdentityModel.Client;
-using Movies.Client.Configuration;
+using Movies.Client.Interactive.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Movies.Client.Services
+namespace Movies.Client.Interactive.Services
 {
 	public class ClientCredentialService : IClientCredentialService
 	{

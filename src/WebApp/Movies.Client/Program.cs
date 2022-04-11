@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
-using Movies.Client.Configuration;
-using Movies.Client.HttpHandlers;
-using Movies.Client.Services;
+using Movies.Client.Interactive.Configuration;
+using Movies.Client.Interactive.HttpHandlers;
+using Movies.Client.Interactive.Services;
 using OpenAPIConsumer;
 
 var builder = WebApplication.CreateBuilder(args);

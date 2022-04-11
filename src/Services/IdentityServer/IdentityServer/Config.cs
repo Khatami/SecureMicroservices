@@ -81,6 +81,70 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 				}
+			},
+
+			// Hybrid Clients
+			new Client()
+			{
+				ClientId = "movies_mvc_client_hybrid",
+				ClientName = "Movies MVC Web App",
+				AllowedGrantTypes = GrantTypes.Hybrid,
+
+				// Proof Key for Code Exchange (abbreviated PKCE, pronounced “pixie”)
+				// is an extension to the authorization code flow to prevent CSRF and authorization code injection attacks.
+				RequirePkce = false, //TODO: ?
+				AllowRememberConsent = false, //TODO: ?
+				RedirectUris = new List<string>()
+				{
+					"https://localhost:6700/signin-oidc" // Movies.Client URI
+				},
+				PostLogoutRedirectUris = new List<string>()
+				{
+					"https://localhost:6700/signout-callback-oidc" // Movies.Client URI
+				},
+				ClientSecrets =
+				{
+					new Secret("secret".Sha256())
+				},
+				AllowedScopes = new List<string>()
+				{
+					/*
+					   ************************************************************
+					   IdentityResources
+					   ************************************************************
+					*/
+
+					// REQUIRED. Informs the Authorization Server that the Client is making an OpenID
+					// Connect request. If the openid scope value is not present, the behavior is entirely unspecified.
+					IdentityServerConstants.StandardScopes.OpenId,
+
+					// OPTIONAL. This scope value requests access to the End-User's default profile
+					// Claims, which are: name, family_name, given_name, middle_name, nickname, preferred_username,
+					// profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.
+					IdentityServerConstants.StandardScopes.Profile,
+
+					"AllowedServices",
+
+					/*
+					   ************************************************************
+					   /IdentityResources
+					   ************************************************************
+					*/
+
+					/*
+					   ************************************************************
+					   ApiScopes
+					   ************************************************************
+					*/
+
+					"movieAPI"
+
+					/*
+					   ************************************************************
+					   /ApiScopes
+					   ************************************************************
+					*/
+				}
 			}
 		};
 
