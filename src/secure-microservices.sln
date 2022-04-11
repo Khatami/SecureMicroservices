@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.API", "Services\Movi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Client.Interactive", "WebApp\Movies.Client.Interactive\Movies.Client.Interactive.csproj", "{6883A2A1-77DD-43E9-90A3-441EEB812CE3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Movies.Client.Hybrid", "WebApp\Movies.Client.Hybrid\Movies.Client.Hybrid.csproj", "{893BA0C3-2F69-48B0-9683-181776636BA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{6883A2A1-77DD-43E9-90A3-441EEB812CE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6883A2A1-77DD-43E9-90A3-441EEB812CE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6883A2A1-77DD-43E9-90A3-441EEB812CE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{893BA0C3-2F69-48B0-9683-181776636BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{893BA0C3-2F69-48B0-9683-181776636BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{893BA0C3-2F69-48B0-9683-181776636BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{893BA0C3-2F69-48B0-9683-181776636BA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{14D24CC8-F068-4887-8D76-2E5B09974E8E} = {3EF032F3-B1DE-4AC9-A86C-E5DBD092805E}
 		{CD7F6FA1-C9D2-4F1A-9B14-3CB54D9E8E7D} = {6BB4442C-744D-4866-83E1-1957A516EC58}
 		{6883A2A1-77DD-43E9-90A3-441EEB812CE3} = {1F9894E5-6FFF-4F4C-845D-6F077EE89ADF}
+		{893BA0C3-2F69-48B0-9683-181776636BA7} = {1F9894E5-6FFF-4F4C-845D-6F077EE89ADF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7C002D2-5391-4FE9-8085-7D520D59F045}
