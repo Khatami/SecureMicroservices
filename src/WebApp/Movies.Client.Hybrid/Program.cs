@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Net.Http.Headers;
@@ -62,7 +63,7 @@ builder.Services.AddAuthentication(options =>
 	options.ResponseType = "code id_token";
 
 	var predifniedScopes = options.Scope; //OpenID, Profile
-	options.Scope.Add("AllowedServices");
+	options.Scope.Add("allowedservices");
 	options.Scope.Add("movieAPI");
 
 	var predifinedClaimActions = options.ClaimActions;
@@ -80,7 +81,7 @@ builder.Services.AddAuthentication(options =>
 		Microsoft and IdentityServer have different opinion on what the name of the claims should be,
 		so you need to point out, which claim is the name claim, by using:
 	*/
-	options.TokenValidationParameters.NameClaimType = "given_name";
+	options.TokenValidationParameters.NameClaimType = JwtClaimTypes.PreferredUserName;
 
 	options.Events =  new OpenIdConnectEvents
 	{

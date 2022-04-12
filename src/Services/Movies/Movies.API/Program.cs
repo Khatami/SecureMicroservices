@@ -28,6 +28,8 @@ builder.Services.AddAuthorization(options =>
 		policy.RequireClaim("client_id", "movieClient" , "movies_mvc_client_interactive", "movies_mvc_client_hybrid"));
 
 	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
+
+	// options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("given_name", "Seyedhamed")); //TODO: ?
 });
 
 // EF

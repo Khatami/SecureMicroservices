@@ -73,7 +73,7 @@ namespace IdentityServer
 					// profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.
 					IdentityServerConstants.StandardScopes.Profile,
 
-					"AllowedServices",
+					"allowedservices",
 
 					/*
 					   ************************************************************
@@ -137,7 +137,7 @@ namespace IdentityServer
 					// profile, picture, website, gender, birthdate, zoneinfo, locale, and updated_at.
 					IdentityServerConstants.StandardScopes.Profile,
 
-					"AllowedServices",
+					"allowedservices",
 
 					/*
 					   ************************************************************
@@ -208,6 +208,7 @@ namespace IdentityServer
 					JwtClaimTypes.FamilyName,
 					JwtClaimTypes.WebSite,
 					JwtClaimTypes.Email,
+					JwtClaimTypes.PreferredUserName
 				},
 				displayName: "Your profile data"),
 
@@ -225,7 +226,7 @@ namespace IdentityServer
 			   ************************************************************
 			*/
 			new IdentityResource(
-				name: "AllowedServices",
+				name: "allowedservices",
 				userClaims: new[] { "services" },
 				displayName: "Services, which are allowed to access")
 
@@ -240,11 +241,12 @@ namespace IdentityServer
 		{
 			new TestUser()
 			{
-				SubjectId = "1A2A8CF9-4533-4442-92CB-1D22E198F6CA",
+				SubjectId = "2A2A8CF9-4533-4442-92CB-1D22E198F6CA",
 				Username = "hamed",
 				Password = "hamed",
 				Claims = new List<Claim>()
 				{
+					new Claim(JwtClaimTypes.PreferredUserName, "hamed"),
 					new Claim(JwtClaimTypes.GivenName, "Seyedhamed"),
 					new Claim(JwtClaimTypes.FamilyName, "Khatami"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.hamed.com"),
@@ -255,11 +257,12 @@ namespace IdentityServer
 
 			new TestUser()
 			{
-				SubjectId = "1A3A8CF9-4533-4442-92CB-1D22E198F6CA",
+				SubjectId = "2A3A8CF9-4533-4442-92CB-1D22E198F6CA",
 				Username = "fatemeh",
 				Password = "seraj",
 				Claims = new List<Claim>()
 				{
+					new Claim(JwtClaimTypes.PreferredUserName, "fatemeh"),
 					new Claim(JwtClaimTypes.GivenName, "Fatemeh"),
 					new Claim(JwtClaimTypes.FamilyName, "Seraj"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.fatemeh.com"),
