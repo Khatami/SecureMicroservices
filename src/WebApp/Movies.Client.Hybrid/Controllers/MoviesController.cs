@@ -14,6 +14,12 @@ namespace Movies.Client.Hybrid.Controllers
 			_client = client;
 		}
 
+		[Authorize(Roles = "admin")]
+		public IActionResult OnlyAdmin()
+		{
+			return Content("Admin page");
+		}
+
 		// GET: Movies
 		public async Task<IActionResult> Index()
 		{

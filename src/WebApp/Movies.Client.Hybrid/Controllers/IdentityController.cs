@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,12 @@ namespace Movies.Client.Hybrid.Controllers
 	[Authorize]
 	public class IdentityController : Controller
 	{
+		private readonly IHttpClientFactory _httpClientFactory;
+		public IdentityController(IHttpClientFactory httpClientFactory)
+		{
+			_httpClientFactory = httpClientFactory;
+		}
+
 		[AllowAnonymous]
 		public IActionResult Login()
 		{
@@ -39,16 +46,29 @@ namespace Movies.Client.Hybrid.Controllers
 			await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
 		}
 
-		public async Task<ActionResult> Claims()
+		public async Task<ActionResult> UserInfo()
 		{
 			if (User.Identity.IsAuthenticated == false)
 			{
 				return Forbid();
 			}
 
+			var client = _httpClientFactory.CreateClient("IDClient");
+			var discoveryDocumentResponse = await client.GetDiscoveryDocumentAsync();
+			if (discoveryDocumentResponse.IsError)
+			{
+				return null;
+			}
+
+			var userInfo = await client.GetUserInfoAsync(new UserInfoRequest()
+			{
+				Address = discoveryDocumentResponse.UserInfoEndpoint,
+				Token = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken)
+			});
+
 			await LogTokensAndClaims();
 
-			return View();
+			return View(userInfo);
 		}
 
 		public async Task LogTokensAndClaims()

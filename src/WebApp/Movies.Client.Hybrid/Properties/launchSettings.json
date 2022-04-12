@@ -1,14 +1,13 @@
-﻿{
-	"profiles": {
-		"Movies.Client": {
-			"commandName": "Project",
-			"dotnetRunMessages": true,
-			"launchBrowser": true,
-			"launchUrl": "",
-			"applicationUrl": "https://localhost:6600;",
-			"environmentVariables": {
-				"ASPNETCORE_ENVIRONMENT": "Development"
-			}
-		}
-	}
+{
+  "profiles": {
+    "Movies.Client": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:6600;",
+      "dotnetRunMessages": true
+    }
+  }
 }

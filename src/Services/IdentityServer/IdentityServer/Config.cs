@@ -75,6 +75,8 @@ namespace IdentityServer
 
 					"allowedservices",
 
+					"roles",
+
 					/*
 					   ************************************************************
 					   /IdentityResources
@@ -138,6 +140,8 @@ namespace IdentityServer
 					IdentityServerConstants.StandardScopes.Profile,
 
 					"allowedservices",
+
+					"roles",
 
 					/*
 					   ************************************************************
@@ -228,8 +232,12 @@ namespace IdentityServer
 			new IdentityResource(
 				name: "allowedservices",
 				userClaims: new[] { "services" },
-				displayName: "Services, which are allowed to access")
+				displayName: "Services, which are allowed to access"),
 
+			new IdentityResource(
+				name: "roles",
+				userClaims: new[] { "role" },
+				displayName: "User's roles"),
 			/*
 			   ************************************************************
 			   /custom identity resources
@@ -251,7 +259,8 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.FamilyName, "Khatami"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.hamed.com"),
 					new Claim(JwtClaimTypes.Email, "shamedkhatami@gmail.com"),
-					new Claim("services", "A,B,C")
+					new Claim(JwtClaimTypes.Role, "user"),
+					new Claim("services", "A,B,C"),
 				}
 			},
 
@@ -267,6 +276,7 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.FamilyName, "Seraj"),
 					new Claim(JwtClaimTypes.WebSite, "http://www.fatemeh.com"),
 					new Claim(JwtClaimTypes.Email, "fatemeh_seraj@outlook.com"),
+					new Claim(JwtClaimTypes.Role, "admin"),
 					new Claim("services", "A,B")
 				}
 			}

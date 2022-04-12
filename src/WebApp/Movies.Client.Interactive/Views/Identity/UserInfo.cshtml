@@ -1,9 +1,13 @@
-﻿<div>
+﻿@using IdentityModel.Client
+@model UserInfoResponse
+
+<div>
 	<a asp-controller="Movies" asp-action="Index">Index</a>
 </div>
 
-<br/>
+<br />
 
+Claims
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
@@ -25,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach(var claim in User.Claims.Select((value , index) => (value , index)))
+		@foreach (var claim in User.Claims.Select((value, index) => (value, index)))
 		{
 			<tr>
 				<td>
@@ -39,6 +43,36 @@
 				</td>
 				<td>
 					@claim.value.Value
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+UserInfo
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>
+				Type
+			</th>
+
+			<th>
+				Value
+			</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@foreach (var userInfo in Model.Claims)
+		{
+			<tr>
+				<td>
+					@userInfo.Type
+				</td>
+
+				<td>
+					@userInfo.Value
 				</td>
 			</tr>
 		}

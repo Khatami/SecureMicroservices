@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Movies.Client.Hybrid.HttpHandlers;
 using OpenAPIConsumer;
@@ -17,6 +18,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddTransient<AuthenticationDelegatingHandler>();
+
+builder.Services.AddHttpClient("IDClient", client =>
+{
+	client.DefaultRequestHeaders.Clear();
+	client.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+
+	client.BaseAddress = new Uri("https://localhost:8888");
+}).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+
 builder.Services.AddHttpClient("MovieApiClient", client =>
 {
 	client.DefaultRequestHeaders.Clear();
@@ -65,9 +75,12 @@ builder.Services.AddAuthentication(options =>
 	var predifniedScopes = options.Scope; //OpenID, Profile
 	options.Scope.Add("allowedservices");
 	options.Scope.Add("movieAPI");
+	options.Scope.Add("roles");
 
 	var predifinedClaimActions = options.ClaimActions;
-	options.ClaimActions.MapUniqueJsonKey("website", "website");
+	options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.WebSite, JwtClaimTypes.WebSite);
+	options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.PreferredUserName, JwtClaimTypes.PreferredUserName);
+	options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role);
 	options.ClaimActions.MapUniqueJsonKey("services", "services");
 
 	options.SaveTokens = true; //TODO: ?
@@ -81,7 +94,11 @@ builder.Services.AddAuthentication(options =>
 		Microsoft and IdentityServer have different opinion on what the name of the claims should be,
 		so you need to point out, which claim is the name claim, by using:
 	*/
-	options.TokenValidationParameters.NameClaimType = JwtClaimTypes.PreferredUserName;
+	options.TokenValidationParameters = new TokenValidationParameters()
+	{
+		NameClaimType = JwtClaimTypes.PreferredUserName,
+		RoleClaimType = JwtClaimTypes.Role
+	};
 
 	options.Events =  new OpenIdConnectEvents
 	{

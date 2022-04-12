@@ -15,9 +15,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
 	{
 		options.Authority = "https://localhost:8888";
+
 		options.TokenValidationParameters = new TokenValidationParameters()
 		{
-			ValidateAudience = false //TODO: ?
+			ValidateAudience = false, //TODO: ?
 		};
 	});
 
@@ -29,7 +30,7 @@ builder.Services.AddAuthorization(options =>
 
 	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
 
-	// options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("given_name", "Seyedhamed")); //TODO: ?
+	options.AddPolicy("AdminRolePolicy", policy => policy.RequireClaim("role", "admin"));
 });
 
 // EF
