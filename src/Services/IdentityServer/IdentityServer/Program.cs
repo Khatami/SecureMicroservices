@@ -57,8 +57,10 @@ identityServerBuilder
 			sql => sql.MigrationsAssembly(assemblyName));
 	});
 
+// Build the application
 var app = builder.Build();
 
+// Migrate IdentityServer4 Database
 app.MigrateDatabase();
 
 app.UseHttpsRedirection();
