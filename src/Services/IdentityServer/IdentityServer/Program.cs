@@ -1,6 +1,9 @@
 using IdentityServer;
+using IdentityServer.Extensions;
 using IdentityServer4.Services;
 using IdentityServerHost.Quickstart.UI;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,16 +28,38 @@ if (builder.Environment.IsDevelopment())
 }
 
 // IdentityServer
-builder.Services
+var identityServerBuilder = builder.Services
 	.AddIdentityServer()
-	.AddInMemoryClients(Config.Clients)
-	.AddInMemoryIdentityResources(Config.IdentityResources)
-	.AddInMemoryApiResources(Config.ApiResources)
-	.AddInMemoryApiScopes(Config.ApiScopes)
-	.AddTestUsers(Config.TestUsers)
 	.AddDeveloperSigningCredential();
 
+// In Memory
+//identityServerBuilder
+//	.AddInMemoryClients(Config.Clients)
+//	.AddInMemoryIdentityResources(Config.IdentityResources)
+//	.AddInMemoryApiResources(Config.ApiResources)
+//	.AddInMemoryApiScopes(Config.ApiScopes)
+//	.AddTestUsers(Config.TestUsers);
+
+// IdentityServer4 EF Integration
+string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
+string connectionString = builder.Configuration.GetConnectionString("IdentityServerDbContext");
+
+identityServerBuilder
+	.AddTestUsers(Config.TestUsers)
+	.AddConfigurationStore(options =>
+	{
+		options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+			sql => sql.MigrationsAssembly(assemblyName));
+	})
+	.AddOperationalStore(options =>
+	{
+		options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
+			sql => sql.MigrationsAssembly(assemblyName));
+	});
+
 var app = builder.Build();
+
+app.MigrateDatabase();
 
 app.UseHttpsRedirection();
 
