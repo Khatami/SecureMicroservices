@@ -108,7 +108,7 @@ namespace IdentityServer
 
 				// Proof Key for Code Exchange (abbreviated PKCE, pronounced “pixie”)
 				// is an extension to the authorization code flow to prevent CSRF and authorization code injection attacks.
-				RequirePkce = false, //TODO: ?
+				RequirePkce = false,
 				AllowRememberConsent = false, //TODO: ?
 				RedirectUris = new List<string>()
 				{
