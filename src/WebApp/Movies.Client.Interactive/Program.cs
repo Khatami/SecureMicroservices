@@ -34,7 +34,7 @@ builder.Services.AddTransient<MoviesAPIClient>(x =>
 {
 	var httpClient = x.GetService<IHttpClientFactory>().CreateClient("MovieApiClient");
 
-	var movieAPIClientAddress = builder.Configuration.GetValue<string>("OpenAPIConsumer:Movies.API");
+	var movieAPIClientAddress = builder.Configuration.GetValue<string>("ApiGateways");
 	return new MoviesAPIClient(movieAPIClientAddress, httpClient);
 });
 
