@@ -8,9 +8,10 @@ namespace Movies.API.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+
 	[Authorize("ClientIdPolicy")]
 	[Authorize("ScopePolicy")]
-	//[Authorize]
+	[Authorize("AdminRolePolicy")]
 	public class MoviesController : ControllerBase
 	{
 		private readonly MoviesDbContext _context;

@@ -46,6 +46,7 @@ string connectionString = builder.Configuration.GetConnectionString("IdentitySer
 
 identityServerBuilder
 	.AddTestUsers(Config.TestUsers)
+	.AddProfileService<IdentityProfileService>()
 	.AddConfigurationStore(options =>
 	{
 		options.ConfigureDbContext = b => b.UseSqlServer(connectionString,

@@ -73,9 +73,13 @@ builder.Services.AddAuthentication(options =>
 	options.ResponseType = "code id_token";
 
 	var predifniedScopes = options.Scope; //OpenID, Profile
+	
+	// IdentityResources
 	options.Scope.Add("allowedservices");
-	options.Scope.Add("movieAPI");
 	options.Scope.Add("roles");
+
+	// ApiScopes
+	options.Scope.Add("movieAPI");
 
 	var predifinedClaimActions = options.ClaimActions;
 	options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.WebSite, JwtClaimTypes.WebSite);

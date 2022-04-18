@@ -8,7 +8,6 @@ namespace Movies.Client.Interactive.HttpHandlers
 	public class AuthenticationDelegatingHandler : DelegatingHandler
 	{
 		private readonly IHttpContextAccessor _contextAccessor;
-		private string _accessToken { get; set; }
 		public AuthenticationDelegatingHandler(IHttpContextAccessor contextAccessor)
 		{
 			_contextAccessor = contextAccessor;
@@ -16,22 +15,9 @@ namespace Movies.Client.Interactive.HttpHandlers
 
 		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
 		{
-			if (string.IsNullOrEmpty(_accessToken) == false)
-			{
-				var tokenHandler = new JwtSecurityTokenHandler();
-				var jwtSecurityToken = tokenHandler.ReadJwtToken(_accessToken);
+			var accessToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
-				if (jwtSecurityToken.ValidTo > DateTime.UtcNow.AddSeconds(60))
-				{
-					request.SetBearerToken(_accessToken);
-
-					return await base.SendAsync(request, cancellationToken);
-				}
-			}
-
-			_accessToken = await _contextAccessor.HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
-
-			request.SetBearerToken(_accessToken);
+			request.SetBearerToken(accessToken);
 
 			return await base.SendAsync(request, cancellationToken);
 		}

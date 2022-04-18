@@ -19,7 +19,7 @@ namespace IdentityServer
 				{
 					new Secret("secret".Sha256())
 				},
-				AllowedScopes = 
+				AllowedScopes =
 				{
 					/*
 					   ************************************************************
@@ -43,7 +43,8 @@ namespace IdentityServer
 				ClientId = "movies_mvc_client_interactive",
 				ClientName = "Movies MVC Web App",
 				AllowedGrantTypes = GrantTypes.Code,
-				AllowRememberConsent = false, //TODO: ?
+				AlwaysIncludeUserClaimsInIdToken = true,
+				AllowRememberConsent = false, //TODO: ?\
 				RedirectUris = new List<string>()
 				{
 					"https://localhost:6700/signin-oidc" // Movies.Client URI
@@ -172,7 +173,13 @@ namespace IdentityServer
 
 		public static IEnumerable<ApiScope> ApiScopes => new ApiScope[]
 		{
-			new ApiScope("movieAPI", "Movie API")
+			new ApiScope("movieAPI", "Movie API",
+				new[]
+				{
+					//Custom user claims that should be provided when requesting access to this API.
+					//These claims will be added to the access token, not the ID-token!
+					JwtClaimTypes.Role
+				})
 		};
 
 		// An identity resource is a named group of claims that can be requested using the scope parameter.
@@ -260,7 +267,8 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.WebSite, "http://www.hamed.com"),
 					new Claim(JwtClaimTypes.Email, "shamedkhatami@gmail.com"),
 					new Claim(JwtClaimTypes.Role, "user"),
-					new Claim("services", "A,B,C"),
+					new Claim(JwtClaimTypes.NickName, "HK"),
+					new Claim("services", "A,B,C")
 				}
 			},
 
@@ -277,6 +285,7 @@ namespace IdentityServer
 					new Claim(JwtClaimTypes.WebSite, "http://www.fatemeh.com"),
 					new Claim(JwtClaimTypes.Email, "fatemeh_seraj@outlook.com"),
 					new Claim(JwtClaimTypes.Role, "admin"),
+					new Claim(JwtClaimTypes.NickName, "FJ"),
 					new Claim("services", "A,B")
 				}
 			}

@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movies.API.OperationFilters;
 using Movies.API.Persistence;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,7 @@ builder.Services.AddAuthorization(options =>
 
 	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
 
-	options.AddPolicy("AdminRolePolicy", policy => policy.RequireClaim("role", "admin"));
+	options.AddPolicy("AdminRolePolicy", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
 });
 
 // EF
