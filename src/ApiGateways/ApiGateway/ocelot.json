@@ -11,7 +11,23 @@
 				}
 			],
 			"UpstreamPathTemplate": "/api/movies",
-			"UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+			"UpstreamHttpMethod": [ "GET" ],
+			"AuthenticationOptions": {
+				"AuthenticationProviderKey": "IdentityApiKey",
+				"AllowedScopes": [] // it means we are allowing all of scopes
+			}
+		},
+		{
+			"DownstreamPathTemplate": "/api/movies/{url}",
+			"DownstreamScheme": "https",
+			"DownstreamHostAndPorts": [
+				{
+					"Host": "localhost",
+					"Port": "6500"
+				}
+			],
+			"UpstreamPathTemplate": "/api/movies/{url}",
+			"UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
 			"AuthenticationOptions": {
 				"AuthenticationProviderKey": "IdentityApiKey",
 				"AllowedScopes": [] // it means we are allowing all of scopes

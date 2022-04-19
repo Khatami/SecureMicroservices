@@ -27,7 +27,7 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 
-					"movieAPI"
+					"movies.getall"
 
 					/*
 					   ************************************************************
@@ -90,7 +90,7 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 
-					"movieAPI"
+					"movies.getall"
 
 					/*
 					   ************************************************************
@@ -156,7 +156,7 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 
-					"movieAPI"
+					"movies.getall"
 
 					/*
 					   ************************************************************
@@ -169,17 +169,27 @@ namespace IdentityServer
 
 		public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
 		{
+			// 1-support for the JWT aud claim. The value(s) of the audience claim will be the name of the API resource(s)
+			new ApiResource("movieAPI", "Movie API")
+			{
+				Scopes = { "movies.getall", "movies.get", "movies.update", "movies.create", "movies.delete" },
+
+				//2-support for adding common user claims across all contained scopes
+				UserClaims = { JwtClaimTypes.Role }
+			}
+
+			//TODO: ?
+			//3-support for introspection by assigning a API secret to the resource
+			//4-support for configuring the access token signing algorithm for the resource
 		};
 
 		public static IEnumerable<ApiScope> ApiScopes => new ApiScope[]
 		{
-			new ApiScope("movieAPI", "Movie API",
-				new[]
-				{
-					//Custom user claims that should be provided when requesting access to this API.
-					//These claims will be added to the access token, not the ID-token!
-					JwtClaimTypes.Role
-				})
+			new ApiScope("movies.getall", "get all movies"),
+			new ApiScope("movies.get", "get a movie by id"),
+			new ApiScope("movies.update", "update a movies"),
+			new ApiScope("movies.create", "create a movies"),
+			new ApiScope("movies.delete", "delete a movies")
 		};
 
 		// An identity resource is a named group of claims that can be requested using the scope parameter.

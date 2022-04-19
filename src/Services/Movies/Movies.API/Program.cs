@@ -4,7 +4,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Movies.API.OperationFilters;
 using Movies.API.Persistence;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,17 +19,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 		options.TokenValidationParameters = new TokenValidationParameters()
 		{
-			ValidateAudience = false, //TODO: ?
+			ValidateAudience = true,
+			RequireAudience = true,
+			ValidAudiences = new string[] 
+			{
+				"movieAPI"
+			}
 		};
 	});
 
 // Claims-based authorization
 builder.Services.AddAuthorization(options =>
 {
-	options.AddPolicy("ClientIdPolicy", policy => 
-		policy.RequireClaim("client_id", "movieClient" , "movies_mvc_client_interactive", "movies_mvc_client_hybrid"));
-
-	options.AddPolicy("ScopePolicy", policy => policy.RequireClaim("scope", "movieAPI"));
+	options.AddPolicy("ClientIdPolicy", policy =>
+		policy.RequireClaim("client_id", "movieClient", "movies_mvc_client_interactive", "movies_mvc_client_hybrid"));
 
 	options.AddPolicy("AdminRolePolicy", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
 });
@@ -76,7 +78,8 @@ context.Database.EnsureCreated();
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
-	app.UseSwaggerUI(options => {
+	app.UseSwaggerUI(options =>
+	{
 		options.OAuthClientId("movieClient");
 		options.OAuthClientSecret("secret");
 	});

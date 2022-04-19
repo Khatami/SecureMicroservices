@@ -33,14 +33,16 @@ var identityServerBuilder = builder.Services
 	.AddDeveloperSigningCredential();
 
 // In Memory
-//identityServerBuilder
-//	.AddInMemoryClients(Config.Clients)
-//	.AddInMemoryIdentityResources(Config.IdentityResources)
-//	.AddInMemoryApiResources(Config.ApiResources)
-//	.AddInMemoryApiScopes(Config.ApiScopes)
-//	.AddTestUsers(Config.TestUsers);
+identityServerBuilder
+	.AddInMemoryClients(Config.Clients)
+	.AddInMemoryIdentityResources(Config.IdentityResources)
+	.AddInMemoryApiResources(Config.ApiResources)
+	.AddInMemoryApiScopes(Config.ApiScopes)
+	.AddTestUsers(Config.TestUsers)
+	.AddProfileService<IdentityProfileService>();
 
 // IdentityServer4 EF Integration
+/*
 string assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
 string connectionString = builder.Configuration.GetConnectionString("IdentityServerDbContext");
 
@@ -57,12 +59,13 @@ identityServerBuilder
 		options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
 			sql => sql.MigrationsAssembly(assemblyName));
 	});
+*/
 
 // Build the application
 var app = builder.Build();
 
 // Migrate IdentityServer4 Database
-app.MigrateDatabase();
+//app.MigrateDatabase();
 
 app.UseHttpsRedirection();
 

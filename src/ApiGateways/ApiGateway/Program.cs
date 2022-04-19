@@ -18,7 +18,12 @@ builder.Services.AddAuthentication()
 
 		options.TokenValidationParameters = new TokenValidationParameters()
 		{
-			ValidateAudience = false, //TODO: ?
+			ValidateAudience = true,
+			RequireAudience = true,
+			ValidAudiences = new string[]
+			{
+				"movieAPI"
+			}
 		};
 	});
 

@@ -116,7 +116,7 @@ namespace Movies.Client.Hybrid.Controllers
 				return NotFound();
 			}
 
-			var movie = await _client.DeleteMovieAsync(id.Value);
+			var movie = await _client.GetMovieAsync(id.Value);
 
 			if (movie == null)
 			{
