@@ -90,7 +90,15 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 
-					"movies.getall"
+					"movies.getall",
+
+					"movies.get",
+
+					"movies.update",
+
+					"movies.create",
+
+					"movies.delete"
 
 					/*
 					   ************************************************************
@@ -156,7 +164,15 @@ namespace IdentityServer
 					   ************************************************************
 					*/
 
-					"movies.getall"
+					"movies.getall",
+
+					"movies.get",
+
+					"movies.update",
+
+					"movies.create",
+
+					"movies.delete"
 
 					/*
 					   ************************************************************

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Movies.API.Infrastructure;
 using Movies.API.OperationFilters;
 using Movies.API.Persistence;
 using System.Security.Claims;
@@ -36,6 +38,8 @@ builder.Services.AddAuthorization(options =>
 
 	options.AddPolicy("AdminRolePolicy", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
 });
+
+builder.Services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizationPolicyProvider>();
 
 // EF
 builder.Services.AddDbContext<MoviesDbContext>(options =>

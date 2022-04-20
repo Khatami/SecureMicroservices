@@ -77,6 +77,10 @@ builder.Services.AddAuthentication(options =>
 
 	// ApiScopes
 	options.Scope.Add("movies.getall");
+	options.Scope.Add("movies.get");
+	options.Scope.Add("movies.update");
+	options.Scope.Add("movies.create");
+	options.Scope.Add("movies.delete");
 
 	var predifinedClaimActions = options.ClaimActions;
 	options.ClaimActions.MapUniqueJsonKey(JwtClaimTypes.WebSite, JwtClaimTypes.WebSite);

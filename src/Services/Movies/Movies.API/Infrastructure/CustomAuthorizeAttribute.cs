@@ -4,9 +4,11 @@ namespace Movies.API.Infrastructure
 {
 	public class CustomAuthorizeAttribute : AuthorizeAttribute
 	{
+		public const string POLICY_PREFIX = "APIScope_";
+
 		public CustomAuthorizeAttribute(string apiScope)
 		{
-			Policy = apiScope;
+			Policy = $"{POLICY_PREFIX}{apiScope}";
 		}
 	}
 }

@@ -12,6 +12,8 @@ namespace Movies.API.Controllers
 
 	//[Authorize("ClientIdPolicy")]
 	//[Authorize("AdminRolePolicy")]
+
+	[Authorize("ClientIdPolicy", Roles = "admin")]
 	public class MoviesController : ControllerBase
 	{
 		private readonly MoviesDbContext _context;
@@ -23,7 +25,7 @@ namespace Movies.API.Controllers
 
 		// GET: api/Movies
 		[HttpGet(Name = nameof(GetMovies))]
-		[CustomAuthorize("movies.getall", Roles = "admin", Policy = "ClientIdPolicy")]
+		[CustomAuthorize("movies.getall")]
 		public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
 		{
 			return await _context.Movies.ToListAsync();
@@ -31,7 +33,7 @@ namespace Movies.API.Controllers
 
 		// GET: api/Movies/5
 		[HttpGet("{id}", Name = nameof(GetMovie))]
-		[CustomAuthorize("movies.get", Roles = "admin", Policy = "ClientIdPolicy")]
+		[CustomAuthorize("movies.get")]
 		public async Task<ActionResult<Movie>> GetMovie(int id)
 		{
 			var movie = await _context.Movies.FindAsync(id);
@@ -48,7 +50,7 @@ namespace Movies.API.Controllers
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
 		[HttpPut("{id}", Name = nameof(PutMovie))]
-		[CustomAuthorize("movies.update", Roles = "admin", Policy = "ClientIdPolicy")]
+		[CustomAuthorize("movies.update")]
 		public async Task<IActionResult> PutMovie(int id, Movie movie)
 		{
 			if (id != movie.Id)
@@ -81,7 +83,7 @@ namespace Movies.API.Controllers
 		// To protect from overposting attacks, enable the specific properties you want to bind to, for
 		// more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
 		[HttpPost(Name = nameof(PostMovie))]
-		[CustomAuthorize("movies.create", Roles = "admin", Policy = "ClientIdPolicy")]
+		[CustomAuthorize("movies.create")]
 		public async Task<ActionResult<Movie>> PostMovie(Movie movie)
 		{
 			_context.Movies.Add(movie);
@@ -92,7 +94,7 @@ namespace Movies.API.Controllers
 
 		// DELETE: api/Movies/5
 		[HttpDelete("{id}", Name = nameof(DeleteMovie))]
-		[CustomAuthorize("movies.delete", Roles = "admin", Policy = "ClientIdPolicy")]
+		[CustomAuthorize("movies.delete")]
 		public async Task<ActionResult<Movie>> DeleteMovie(int id)
 		{
 			var movie = await _context.Movies.FindAsync(id);
