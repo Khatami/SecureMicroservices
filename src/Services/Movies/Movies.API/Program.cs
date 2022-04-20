@@ -23,7 +23,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		{
 			ValidateAudience = true,
 			RequireAudience = true,
-			ValidAudiences = new string[] 
+			ValidAudiences = new string[]
 			{
 				"movieAPI"
 			}

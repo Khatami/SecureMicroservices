@@ -2,7 +2,6 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace IdentityServer

@@ -109,7 +109,7 @@ builder.Services.AddAuthentication(options =>
 		Steps are different based on chosen flow -> these steps are for authorizationcode flow.
 	*/
 
-	options.Events =  new OpenIdConnectEvents
+	options.Events = new OpenIdConnectEvents
 	{
 		OnAccessDenied = context =>
 		{

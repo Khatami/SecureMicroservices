@@ -108,7 +108,7 @@ builder.Services.AddAuthentication(options =>
 		RoleClaimType = JwtClaimTypes.Role
 	};
 
-	options.Events =  new OpenIdConnectEvents
+	options.Events = new OpenIdConnectEvents
 	{
 		OnAccessDenied = context =>
 		{

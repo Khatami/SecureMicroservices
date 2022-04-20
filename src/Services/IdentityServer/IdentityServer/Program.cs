@@ -1,9 +1,6 @@
 using IdentityServer;
-using IdentityServer.Extensions;
 using IdentityServer4.Services;
 using IdentityServerHost.Quickstart.UI;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
