@@ -2,6 +2,7 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 
 namespace IdentityServer
@@ -44,7 +45,7 @@ namespace IdentityServer
 				ClientName = "Movies MVC Web App",
 				AllowedGrantTypes = GrantTypes.Code,
 				AlwaysIncludeUserClaimsInIdToken = true,
-				AllowRememberConsent = false, //TODO: ?\
+				AllowRememberConsent = false, //TODO: ?
 				RedirectUris = new List<string>()
 				{
 					"https://localhost:6700/signin-oidc" // Movies.Client URI

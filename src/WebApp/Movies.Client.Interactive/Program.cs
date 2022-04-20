@@ -56,7 +56,7 @@ builder.Services.AddTransient<MoviesAPIClient>(x =>
 builder.Services.AddAuthentication(options =>
 {
 	options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;  //TODO: ?
+	options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme; //TODO: ?
 })
 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
 .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
